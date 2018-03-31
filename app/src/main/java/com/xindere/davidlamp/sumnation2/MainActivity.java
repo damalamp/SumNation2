@@ -9,11 +9,16 @@ import android.widget.TextView;
 import java.lang.Math;
 import java.util.Random;
 import android.widget.Chronometer;
+import android.os.Handler;
+
 
 public class MainActivity extends AppCompatActivity {
     double goalTotal, currentTotal;
     Random rand = new Random();
     Chronometer stopWatch;
+    Handler handler;
+    private int seconds=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void resetGame(View v) {
-
         currentTotal = 0;
         TextView currentTotalView = findViewById(R.id.current_total);
         currentTotalView.setBackgroundColor(Color.TRANSPARENT);
@@ -48,8 +52,19 @@ public class MainActivity extends AppCompatActivity {
         goalTotal = rand.nextInt(2047) + 1;
         TextView goalView = findViewById(R.id.goal_total);
         goalView.setText(String.valueOf(goalTotal));
-        stopWatch.setBase(SystemClock.elapsedRealtime());
-        stopWatch.start();
+        //stopWatch.setBase(SystemClock.elapsedRealtime());
+        //stopWatch.start();
+        handler = new Handler();
+        handler.post(new Runnable(){
+            @Override
+            public void run() {
+                int secs = seconds;
+                //int milliseconds = ;
+                String time = String.format("%02d.%03d", seconds, seconds);
+                handler.postDelayed(this, 0);
+            }
+
+        });
 
     }
 }
