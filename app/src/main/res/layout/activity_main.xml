@@ -10,31 +10,34 @@
         android:id="@+id/first_two_rows"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="2">
+            android:layout_weight="3"
+            android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="Goal:"
                     android:textSize="24sp" />
+
                 <TextView
                     android:id="@+id/goal_total"
-                    android:layout_height="match_parent"
                     android:layout_width="wrap_content"
-                    android:gravity="center"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:textSize="32sp" />
             </LinearLayout>
 
@@ -68,10 +71,16 @@
             </LinearLayout>
         </LinearLayout>
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:background="@android:color/black" />
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:orientation="vertical">
 
             <LinearLayout
@@ -82,20 +91,21 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:gravity="right"
+                    android:layout_weight="1"
+                    android:gravity="right|center"
                     android:text="Time:"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/timerValue"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:gravity="right"
-                    android:textSize="16sp" />
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="22sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -104,20 +114,21 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:gravity="right"
+                    android:layout_weight="1"
+                    android:gravity="right|center"
                     android:text="Optimal:"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/optimal"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:gravity="right"
-                    android:textSize="16sp" />
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="24sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -126,19 +137,19 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:gravity="right"
+                    android:layout_weight="1"
+                    android:gravity="right|center"
                     android:text="Clicks:"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/clicks"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:gravity="right"
-                    android:textSize="16sp" />
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="24sp" />
             </LinearLayout>
 
         </LinearLayout>
