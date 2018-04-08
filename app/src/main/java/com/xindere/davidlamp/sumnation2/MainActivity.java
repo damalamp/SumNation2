@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import java.lang.Math;
@@ -13,7 +14,7 @@ import android.os.Handler;
 
 public class MainActivity extends AppCompatActivity {
     double goalTotal, currentTotal,remainder;
-    int clicksRequired,clicks;
+    int clicksRequired,clicks,seconds,milliseconds,previousSeconds,previousMilliseconds;
     int buttonCount = 12;
     int base = 2;
     Random rand = new Random();
@@ -24,9 +25,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run(){
             timeInMilliseconds = SystemClock.uptimeMillis()-startTime;
-            int seconds = (int)(timeInMilliseconds/1000);
-            int milliseconds = (int)(timeInMilliseconds%1000);
-            txtTimerView.setText(String.format("%2d",seconds)+"."+String.format("%02d",milliseconds));
+            seconds = (int)((timeInMilliseconds+previousMilliseconds)/1000);
+            milliseconds = (int)((timeInMilliseconds+previousMilliseconds)%1000);
+            int deciseconds = milliseconds/100;
+            txtTimerView.setText(String.format("%02d",seconds)+"."+String.format("%01d",deciseconds));
             handler.postDelayed(this,10);
         }
     };
@@ -43,6 +45,25 @@ public class MainActivity extends AppCompatActivity {
         clicksView = findViewById(R.id.clicks);
         }
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+        previousSeconds = seconds;
+        previousMilliseconds = milliseconds;
+        handler.removeCallbacks(updateTimerThread);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (goalTotal != 0) {
+            startTime = SystemClock.uptimeMillis();
+            Log.i("string1", "onResume: ");
+            handler.postDelayed(updateTimerThread, 10);
+        }
+    }
+
+
     public void addValue(View v) {
         if (currentTotal < goalTotal) {
             int buttonNumber = Integer.parseInt(v.getTag().toString());
@@ -55,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
             if (currentTotal == goalTotal) {
                 currentTotalView.setBackgroundColor(Color.GREEN);
                 handler.removeCallbacks(updateTimerThread);
+                txtTimerView.setText(String.format("%02d",seconds)+"."+String.format("%03d",milliseconds));
+
             }
             clicks++;
             clicksView.setText(String.valueOf(clicks));
@@ -64,9 +87,10 @@ public class MainActivity extends AppCompatActivity {
     public void resetGame(View v) {
         currentTotal = 0;
         clicksRequired=0;
+        clicks = 0;
         currentTotalView.setBackgroundColor(Color.TRANSPARENT);
         currentTotalView.setText(String.valueOf((int) (currentTotal)));
-        goalTotal = rand.nextInt(2047) + 1;
+        goalTotal = rand.nextInt(4095) + 1;
         remainder = goalTotal;
         for(int i=buttonCount;i>=0;i--){
             if(remainder-Math.pow(base,i)>=0){
@@ -80,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
         optimalView.setText(String.valueOf(clicksRequired));
         goalView.setText(String.valueOf((int) goalTotal));
         startTime = SystemClock.uptimeMillis();
-        handler.postDelayed(updateTimerThread,0);
+        previousMilliseconds = 0;
+        previousMilliseconds = 0;
+        handler.postDelayed(updateTimerThread,10);
     }
 }
