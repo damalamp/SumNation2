@@ -49,16 +49,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
         previousSeconds = seconds;
-        previousMilliseconds = milliseconds;
+        previousMilliseconds = milliseconds+1000*seconds;
         handler.removeCallbacks(updateTimerThread);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (goalTotal != 0) {
+        if (goalTotal != 0 && currentTotal<goalTotal) {
             startTime = SystemClock.uptimeMillis();
-            Log.i("string1", "onResume: ");
             handler.postDelayed(updateTimerThread, 10);
         }
     }
@@ -77,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 currentTotalView.setBackgroundColor(Color.GREEN);
                 handler.removeCallbacks(updateTimerThread);
                 txtTimerView.setText(String.format("%02d",seconds)+"."+String.format("%03d",milliseconds));
-
             }
             clicks++;
             clicksView.setText(String.valueOf(clicks));
@@ -89,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         clicksRequired=0;
         clicks = 0;
         currentTotalView.setBackgroundColor(Color.TRANSPARENT);
+        clicksView.setText(String.valueOf(clicks));
         currentTotalView.setText(String.valueOf((int) (currentTotal)));
         goalTotal = rand.nextInt(4095) + 1;
         remainder = goalTotal;
